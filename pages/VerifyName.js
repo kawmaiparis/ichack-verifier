@@ -1,11 +1,18 @@
 import React from "react";
 
-import { StyleSheet, Text, View, StatusBar, Button } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  StatusBar,
+  Button,
+  ClippingRectangle
+} from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { primaryGradientArray } from "../utils/Colors";
 import { serverIP } from "../utils/Config";
 
-import Header from "../components/HeaderWhite.js";
+import Header from "../components/Header.js";
 import InputName from "../components/inputName.js";
 import MyButton from "../components/MyButton.js";
 
@@ -23,21 +30,23 @@ class VerifyName extends React.Component {
     const username = navigation.getParam("username", "default username");
     const password = navigation.getParam("password", "default password");
     const DID = navigation.getParam("DID", "default DID");
-    const proof = navigation.getParam("proof", "No Proof was passed here");
+    // const proof = navigation.getParam("proof", "Get Image and Name");
     const data = navigation.getParam("data", "No Data was passed here");
     const name = this.state.name;
 
-    console.log("here");
+    const proof = "Get Event and Seat Number and Over 18";
 
-    let json = JSON.parse(JSON.parse(data));
-    console.log(json);
-    console.log(typeof json);
-    const bucketName = json.bucket_name;
-    const objectName = json.file_name;
-    console.log(bucketName);
-    console.log(objectName);
+    console.log("in last page");
+    console.log(data);
 
-    const url = `${serverIP}prove-s3?verifierDid=${DID}&bucketName=${bucketName}&name=${name}&objectName=${objectName}&verifierWalletId=${username}&verifierWalletKey=${password}&proof=${proof}`;
+    // console.log(typeof json);
+    const objectName = data;
+    console.log(data.bucket_name);
+    console.log(data.file_name);
+
+    const url = `${serverIP}prove-s3?verifierDid=${DID}&name=${name}&objectName=${encodeURI(
+      objectName
+    )}&verifierWalletId=${username}&verifierWalletKey=${password}&proof=${proof}`;
     console.log(url);
     await fetch(url, {
       method: "GET",

@@ -18,7 +18,7 @@ class ReadQR extends React.Component {
   static navigationOptions = {
     headerTransparent: true
   };
-
+  state = { scanned: true };
   render() {
     const { navigation } = this.props;
     const username = navigation.getParam("username", "default username");
@@ -39,20 +39,26 @@ class ReadQR extends React.Component {
           <View style={styles.centered}>
             <Header title={"Scan the Prover's"} />
           </View>
-
-          <BarCodeScanner
-            onBarCodeScanned={({ data }) => {
-              this.props.navigation.navigate("VerifyName", {
-                data: data,
-                username: username,
-                password: password,
-                DID: DID,
-                license: license,
-                proof: proof
-              });
-            }}
-            style={styles.camera}
-          />
+          {this.state.scanned ? (
+            <BarCodeScanner
+              onBarCodeScanned={({ data }) => {
+                console.log("scanning");
+                console.log(data);
+                this.setState({ scanned: false });
+                this.props.navigation.navigate("VerifyName", {
+                  data: data,
+                  username: username,
+                  password: password,
+                  DID: DID,
+                  license: license,
+                  proof: proof
+                });
+              }}
+              style={styles.camera}
+            />
+          ) : (
+            <Text />
+          )}
         </View>
       </LinearGradient>
     );
