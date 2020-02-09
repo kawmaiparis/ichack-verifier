@@ -7,12 +7,10 @@ import { fromRight } from "react-navigation-transitions";
 
 import Login from "./pages/Login";
 import License from "./pages/License";
-import Proof from "./pages/Proof";
-import ShowQR from "./pages/ShowQR";
 import ReadQR from "./pages/ReadQR";
 import VerifyName from "./pages/VerifyName";
 
-/* LOGIN ->  LICENSES -> PROOFS -> SHOW QR -> READER */
+/* LOGIN ->  LICENSES (Airline or Concert) -> READER */
 
 console.disableYellowBox = true;
 
@@ -20,8 +18,6 @@ const RootStack = createStackNavigator(
   {
     Login: Login,
     License: License,
-    Proof: Proof,
-    ShowQR: ShowQR,
     ReadQR: ReadQR,
     VerifyName: VerifyName
   },
@@ -43,7 +39,7 @@ export default class App extends React.Component {
 
   async componentDidMount() {
     await Font.loadAsync({
-      "Poppins-ExtraLight": require("./assets/fonts/Poppins-ExtraLight.ttf")
+      "Poppins-ExtraLight": require("./assets/fonts/Poppins-Medium.ttf")
     });
     this.setState({ fontLoaded: true });
   }
